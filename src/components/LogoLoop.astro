@@ -33,6 +33,15 @@ const {
 
 const animationDirection = direction === "left" ? "scroll-left" : "scroll-right";
 const animationDuration = `${speed}s`;
+
+// Resolve local asset paths with base URL and encode spaces
+const resolveSrc = (s?: string) => {
+  if (!s) return s;
+  if (/^https?:\/\//i.test(s)) return s;
+  const base = import.meta.env.BASE_URL?.replace(/\/+$/, "") || "/";
+  const path = s.replace(/^\/+/, "");
+  return encodeURI(`${base}/${path}`);
+};
 ---
 
 <div 
@@ -54,7 +63,7 @@ const animationDuration = `${speed}s`;
             <div class="logo-box">
               {logo.src ? (
                 <img 
-                  src={logo.src} 
+                  src={resolveSrc(logo.src)} 
                   alt={logo.alt || logo.title}
                   class="logo-image"
                   style={`height: ${logoHeight}px;`}
@@ -72,7 +81,7 @@ const animationDuration = `${speed}s`;
             <div class="logo-box">
               {logo.src ? (
                 <img 
-                  src={logo.src} 
+                  src={resolveSrc(logo.src)} 
                   alt={logo.alt || logo.title}
                   class="logo-image"
                   style={`height: ${logoHeight}px;`}
