@@ -1,0 +1,39 @@
+---
+import { siteConfig } from "../config";
+---
+
+<section id="beyond-code" class="p-8 sm:p-12 md:p-16 lg:p-24" data-reveal="up">
+  <div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+      <div class="lg:col-span-4">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+          Beyond Code
+        </h2>
+        <div
+          class="w-[95px] h-[5px] mt-2 rounded-full"
+          style={`background-color: ${siteConfig.accentColor}`}
+        />
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 sm:p-8 shadow-sm">
+          <p class="text-lg sm:text-xl text-gray-700 leading-relaxed">
+            When I’m not building AI/ML projects, I’m usually surfing the internet for curious ideas and underrated finds—tools, essays, research, and creative experiments that make you think twice. I curate the best of those into a short, skimmable newsletter.
+          </p>
+          <a
+            href="https://substack.com/@ratan15"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-5 inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-gray-900 hover:text-white transition-colors duration-300 group"
+            style={`background: linear-gradient(90deg, transparent, transparent), linear-gradient(90deg, ${siteConfig.accentColor}, ${siteConfig.accentColor}); background-size: 100% 100%, 0% 100%; background-repeat: no-repeat; background-position: left, left;`}
+          >
+            <span class="font-semibold">Read my newsletter</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

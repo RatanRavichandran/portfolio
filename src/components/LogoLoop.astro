@@ -1,0 +1,250 @@
+---
+export interface Props {
+  logos: Array<{
+    node?: any;
+    src?: string;
+    alt?: string;
+    title: string;
+    href?: string;
+  }>;
+  speed?: number;
+  direction?: "left" | "right";
+  logoHeight?: number;
+  gap?: number;
+  pauseOnHover?: boolean;
+  scaleOnHover?: boolean;
+  fadeOut?: boolean;
+  fadeOutColor?: string;
+  ariaLabel?: string;
+}
+
+const {
+  logos = [],
+  speed = 80,
+  direction = "left",
+  logoHeight = 48,
+  gap = 40,
+  pauseOnHover = true,
+  scaleOnHover = true,
+  fadeOut = true,
+  fadeOutColor = "#ffffff",
+  ariaLabel = "Technology logos"
+} = Astro.props;
+
+const animationDirection = direction === "left" ? "scroll-left" : "scroll-right";
+const animationDuration = `${speed}s`;
+---
+
+<div 
+  class="logo-loop-container"
+  style={`--logo-height: ${logoHeight}px; --gap: ${gap}px; --animation-duration: ${animationDuration}; --fade-color: ${fadeOutColor};`}
+  aria-label={ariaLabel}
+>
+  <div class={`logo-track ${animationDirection} ${pauseOnHover ? 'pause-on-hover' : ''}`}>
+    {[...logos, ...logos].map((logo, index) => (
+      <div class={`logo-item ${scaleOnHover ? 'scale-on-hover' : ''}`}>
+        {logo.href ? (
+          <a 
+            href={logo.href} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="logo-link"
+            aria-label={`${logo.title} website`}
+          >
+            <div class="logo-box">
+              {logo.src ? (
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt || logo.title}
+                  class="logo-image"
+                  style={`height: ${logoHeight}px;`}
+                />
+              ) : logo.node ? (
+                <div class="logo-icon" set:html={logo.node}></div>
+              ) : (
+                <div class="logo-text">{logo.title}</div>
+              )}
+              <div class="logo-name">{logo.title}</div>
+            </div>
+          </a>
+        ) : (
+          <div class="logo-content">
+            <div class="logo-box">
+              {logo.src ? (
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt || logo.title}
+                  class="logo-image"
+                  style={`height: ${logoHeight}px;`}
+                />
+              ) : logo.node ? (
+                <div class="logo-icon" set:html={logo.node}></div>
+              ) : (
+                <div class="logo-text">{logo.title}</div>
+              )}
+              <div class="logo-name">{logo.title}</div>
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+  {fadeOut && (
+    <>
+      <div class="fade-left"></div>
+      <div class="fade-right"></div>
+    </>
+  )}
+</div>
+
+<style>
+  .logo-loop-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: calc(var(--logo-height) + 60px);
+  }
+
+  .logo-track {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    height: 100%;
+    animation: var(--animation-name) var(--animation-duration) linear infinite;
+  }
+
+  .logo-track.scroll-left {
+    --animation-name: scroll-left;
+  }
+
+  .logo-track.scroll-right {
+    --animation-name: scroll-right;
+  }
+
+  .logo-track.pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+
+  .logo-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .logo-item.scale-on-hover:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    padding: 16px 12px;
+    min-width: 100px;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+  }
+
+  .logo-box:hover {
+    background-color: #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--logo-height);
+    width: auto;
+    margin-bottom: 8px;
+  }
+
+  .logo-icon svg {
+    height: var(--logo-height);
+    width: auto;
+    fill: currentColor;
+  }
+
+  .logo-image {
+    height: var(--logo-height);
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+
+  .logo-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
+
+  .logo-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fade-left,
+  .fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--fade-color), transparent);
+  }
+
+  .fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--fade-color), transparent);
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+</style>

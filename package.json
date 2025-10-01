@@ -1,0 +1,22 @@
+{
+  "name": "devportfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.12.3",
+    "motion": "12.23.22",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^4.4.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

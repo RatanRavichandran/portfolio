@@ -1,0 +1,134 @@
+---
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Projects from "../components/Projects.astro";
+import Accolades from "../components/Accolades.astro";
+import BeyondCode from "../components/BeyondCode.astro";
+import Experience from "../components/Experience.astro";
+import Education from "../components/Education.astro";
+import Footer from "../components/Footer.astro";
+import ClickSpark from "../components/ClickSpark.tsx";
+import { siteConfig } from "../config";
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={siteConfig.description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{siteConfig.name} - {siteConfig.title}</title>
+  </head>
+  <body>
+    <div id="scroll-progress"></div>
+    <Header />
+    <ClickSpark client:load sparkColor="#000">
+      <section>
+        <div data-reveal="up"><Hero /></div>
+        <div data-reveal="up"><About /></div>
+        <div data-reveal="up"><Projects /></div>
+        <div data-reveal="up"><Experience /></div>
+        <div data-reveal="up"><Education /></div>
+        <div data-reveal="up"><Accolades /></div>
+        <div data-reveal="up"><BeyondCode /></div>
+        <section id="get-in-touch" class="p-8 sm:p-12 md:p-16 lg:p-24" data-reveal="up">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">Get in touch</h2>
+            <div class="mx-auto w-[90px] h-[5px] mt-3 rounded-full" style={`background-color: ${siteConfig.accentColor}`} />
+            <p class="mt-6 text-lg sm:text-xl text-gray-700">
+              I’m always down to brainstorm on ideas, work on side projects, or just nerd out. If something sparked your interest, hit me up and let’s build something fun.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="mailto:ratan152004@gmail.com"
+                class="inline-flex items-center justify-center rounded-lg px-5 py-3 font-semibold text-white"
+                style={`background-color: ${siteConfig.accentColor}`}
+              >
+                Email me
+              </a>
+              <a
+                href="https://drive.google.com/drive/folders/1ruDCGfb6AqqQKxGvfwQQ4RU07376j-Kh?usp=drive_link"
+                target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center justify-center rounded-lg px-5 py-3 font-semibold border border-gray-300 text-gray-900 hover:bg-gray-50"
+              >
+                Download my resume
+              </a>
+            </div>
+          </div>
+        </section>
+      </section>
+    </ClickSpark>
+    <Footer />
+    <script>
+      // Scroll progress
+      const bar = document.getElementById('scroll-progress');
+      const onScroll = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        if (bar && bar instanceof HTMLElement) bar.style.width = progress + '%';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // IntersectionObserver reveal
+      const revealEls = document.querySelectorAll('[data-reveal]');
+      // (Hero-local SplashCursor: no global hide logic needed)
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-inview');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+      revealEls.forEach((el) => io.observe(el));
+
+      // Active section highlighting in header
+      const sections = ['about','projects','experience','education','accolades','beyond-code','get-in-touch'];
+      const anchors = new Map(
+        sections.map(id => [id, document.querySelector(`a[href="#${id}"]`)])
+      );
+      const secObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          const id = e.target.getAttribute('id');
+          if (!id) return;
+          const a = anchors.get(id);
+          if (!a) return;
+          if (e.isIntersecting) {
+            anchors.forEach(link => link?.classList.remove('text-black'));
+            a?.classList.add('text-black');
+          }
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0.01 });
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) secObserver.observe(el);
+      });
+
+      // Magnetic hover on footer social icons
+      const magnets = document.querySelectorAll('.magnetic');
+      magnets.forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+          const evt = e as MouseEvent;
+          const rect = (el as HTMLElement).getBoundingClientRect();
+          const relX = evt.clientX - rect.left - rect.width / 2;
+          const relY = evt.clientY - rect.top - rect.height / 2;
+          (el as HTMLElement).style.transform = `translate(${relX * 0.06}px, ${relY * 0.06}px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          (el as HTMLElement).style.transform = 'translate(0,0)';
+        });
+      });
+    </script>
+  </body>
+</html>

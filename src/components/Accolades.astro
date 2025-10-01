@@ -1,0 +1,66 @@
+---
+import { siteConfig } from "../config";
+---
+
+<section id="accolades" class="p-8 sm:p-12 md:p-16 lg:p-24" data-reveal="up">
+  <div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+      <div class="lg:col-span-4">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+          Accolades & Achievements
+        </h2>
+        <div
+          class="w-[95px] h-[5px] mt-2 rounded-full"
+          style={`background-color: ${siteConfig.accentColor}`}
+        />
+      </div>
+
+      <div class="lg:col-span-8">
+        <ul class="grid gap-4 sm:gap-6">
+          {
+            [
+              {
+                title: "First Place, TVS Credit E.P.I.C 6.0 (IT Challenge) 2024",
+                org: "TVS Credit",
+              },
+              {
+                title: "First Place, Intercontinental Innovo Hackathon 2024",
+                org: "Dayananda Sagar University, Bengaluru & LeTourneau University, Texas",
+              },
+              {
+                title: "First Place, HackNXS 2024",
+                org: "Manipal Institute of Technology, Bengaluru",
+              },
+              {
+                title: "Published Author",
+                org: "—",
+              },
+              {
+                title: "International Debate Winner 2021",
+                org: "Debating Society",
+              },
+            ].map((item) => (
+              <li class="relative group">
+                <div class="rounded-xl sm:rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+                  <div class="flex items-start justify-between gap-4">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-900">
+                      {item.title}
+                    </h3>
+                    <span class="inline-block size-2 sm:size-2.5 rounded-full" style={`background-color: ${siteConfig.accentColor}`}></span>
+                  </div>
+                  {item.org !== "—" && (
+                    <p class="mt-1 text-sm sm:text-base text-gray-600">
+                      {item.org}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+

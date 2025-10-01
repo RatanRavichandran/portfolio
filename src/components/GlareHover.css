@@ -1,0 +1,39 @@
+.glare-hover {
+  position: relative;
+  width: var(--gh-width);
+  height: var(--gh-height);
+  border-radius: var(--gh-br);
+  background: var(--gh-bg);
+  border: 1px solid var(--gh-border);
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.glare-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0,0,0,0.08);
+}
+
+.glare-hover::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: var(--gh-size);
+  height: calc(var(--gh-size) * 1.5);
+  background: radial-gradient(closest-side, var(--gh-rgba), transparent 70%);
+  transform: rotate(var(--gh-angle)) translate(-150%, -150%);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform var(--gh-duration) ease, opacity 240ms ease;
+  pointer-events: none;
+}
+
+.glare-hover:hover::after,
+.glare-hover.glare-hover--play-once::after {
+  opacity: 1;
+  transform: rotate(var(--gh-angle)) translate(120%, 120%);
+}
+
+
