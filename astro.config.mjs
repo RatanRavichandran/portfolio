@@ -5,8 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ratanravichandran.github.io',
-  base: '/portfolio',
+  site: 'https://ratan.is-a.dev',
+  base: '/', // Remove /portfolio base path since you're using a custom domain
   integrations: [react()],
   vite: { plugins: [tailwindcss()] },
 });
