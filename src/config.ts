@@ -12,7 +12,7 @@ export const siteConfig = {
     "I'm Ratan, an AI/ML grad who loves experimenting with generative models, building agents, and exploring how tech can reshape everyday problems. When I'm not coding, you'll usually find me writing, dreaming up side projects, or getting lost in a good story.",
   skills: ["Python", "Machine Learning", "Generative AI", "Langchain", "Streamlit", "CrewAI", "Autogen", "QLoRA", "FAISS", "Data & AI", "HTML/CSS", "Numpy/Pandas", "SKLearn", "SQL", "Git", "DSA", "Azure DevOps", "C/C++", "Tensorflow", "MongoDB"],
   techLogos: [
-    { title: "Python", src: "/logoloopcomponents/python.png", href: "https://python.org" },
+    { title: "Python", src: "https://ratan.is-a.dev/logoloopcomponents/python.png", href: "https://python.org" },
     { title: "Machine Learning", src: "/logoloopcomponents/machine learning.jpg", href: "https://scikit-learn.org" },
     { title: "TensorFlow", src: "/logoloopcomponents/tensorflow.png", href: "https://tensorflow.org" },
     { title: "Langchain", src: "/logoloopcomponents/langchan.png", href: "https://langchain.com" },
